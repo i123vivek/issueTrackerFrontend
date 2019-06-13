@@ -1,4 +1,4 @@
-<div class=" container-fluid bg-success">
+<div class=" container-fluid bg-light text-dark">
   <div class="row">
     <div class="col-sm-12">
       <nav class="navbar navbar-expand-md navbar-fixed navbar-dark">
@@ -6,8 +6,15 @@
         <a class="navbar-brand" style="font-size:1.5em; color: white"
           [routerLink]="['/user-dashboard']">IssueTrackerTool</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="text"
+            name="text">
+          <button class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="searchIssueByText()">Search</button>
+        </form>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="##navbarNavDropdown3"
+          aria-controls="#navbarNavDropdown3" aria-expanded="false" aria-label="Toggle navigation">
 
           <span class="navbar-toggler-icon"></span>
 
@@ -17,52 +24,39 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
               <div class="profile" style="float:right">
-                <div style="display:inline-flex; align-items: center">
-                  <!-- <div class="firstChar">{{firstChar}}</div> -->
-                  <h5 style="color: white; text-transform:uppercase">{{fullName}}</h5>
-                </div>
-                <button style="width: 150px; margin-left: 20px" class="btn btn-outline-light" (click)="logout(); logOutWithFacebook();">LogOut</button>
+                
+                <h5 style="color: white; text-transform:uppercase">{{fullName}}</h5>
+
+                <button style="width: 150px; margin-left: 0px" class="btn btn-outline-light"
+                  (click)="logout(); logOutWithFacebook();">LogOut</button>
               </div>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-              [(ngModel)]="searchData" name="searchData">
-            <button class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="searchIssueByText()">Search</button>
-          </form>
         </div>
 
 
+
       </nav>
+
+      <div class="col-12 m-0 p-0  d-flex justify-content-center" style="margin: 20px; padding: 10px">
+        <button class="btn btn-info " [routerLink]="['/issue-create']"
+          style="border-radius: 16px; background-color: burlywood">create-issue</button>
+      </div>
+      
       <div class='row'>
         <div class='col-sm-3'>
           <ul class="list">
             <li class="clearfix cursorPointer" (click)="getAssignedIssuesOfUser()">
-              All issues of logged in user 
+              All issues of logged in user
             </li>
             <li class="clearfix cursorPointer" (click)="getAllIssues()">
               All Issues
             </li>
           </ul>
         </div>
-        <div class= "col-sm-9">
+        <div class="col-sm-9">
           <table class='table table-bordered table-condensed table-striped table-hover' *ngIf="userIssueFlag == true">
-            <tr>
-              <th>issueId</th>
-              <th>title</th>
-              <th>reporter</th>
-              <th>status</th>
-              <th>date</th>
-            </tr>
-            <tr class="clearfix cursorPointer" *ngFor="let issue of assigneedIssuesList" [routerLink]="['/issue-description-view']">
-              <td>{{issue.issueId}}</td>
-              <td>{{issue.title}}</td>
-              <td>{{issue.reporter}}</td>
-              <td>{{issue.status}}</td>
-              <td>{{issue.date}}</td>
-            </tr>
-          </table>
-          <table class='table table-bordered table-condensed table-striped table-hover' *ngIf="userIssueFlag == false">
+            <thead>
               <tr>
                 <th>issueId</th>
                 <th>title</th>
@@ -70,16 +64,42 @@
                 <th>status</th>
                 <th>date</th>
               </tr>
-              <tr class="clearfix cursorPointer" *ngFor="let issue of allIssueList" [routerLink]="['/issue-description-view']">
+            </thead>
+            <tbody>
+              <tr class="clearfix cursorPointer" *ngFor="let issue of assigneedIssuesList"
+                (click)="selectIssue(issue.issueId)" [routerLink]="['/issue-description-view']">
                 <td>{{issue.issueId}}</td>
                 <td>{{issue.title}}</td>
                 <td>{{issue.reporter}}</td>
                 <td>{{issue.status}}</td>
                 <td>{{issue.date}}</td>
               </tr>
-            </table>
+            </tbody>
+          </table>
+          <table class='table table-bordered table-condensed table-striped table-hover' *ngIf="userIssueFlag == false">
+            <thead>
+              <tr>
+                <th>issueId</th>
+                <th>title</th>
+                <th>reporter</th>
+                <th>status</th>
+                <th>date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="clearfix cursorPointer" *ngFor="let issue of allIssueList" (click)="selectIssue(issue.issueId)"
+                [routerLink]="['/issue-description-view']">
+                <td>{{issue.issueId}}</td>
+                <td>{{issue.title}}</td>
+                <td>{{issue.reporter}}</td>
+                <td>{{issue.status}}</td>
+                <td>{{issue.date}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
+
     </div>
 
   </div>

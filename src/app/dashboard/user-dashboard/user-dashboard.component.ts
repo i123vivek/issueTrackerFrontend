@@ -95,6 +95,23 @@ export class UserDashboardComponent implements OnInit,OnDestroy {
     })
   }
 
+  public selectIssue = (issueId) =>{
+    if(this.userIssueFlag == true){
+      this.assigneedIssuesList.map((issue)=>{
+        if(issue.issueId == issueId){
+          Cookie.set('IssueSelected-Id',issue.issueId);
+        }
+      })
+    } else{
+      this.allIssueList.map((issue)=>{
+        if(issue.issueId == issueId){
+          Cookie.set('IssueSelected-Id',issue.issueId);
+        }
+      })
+    }
+    
+  }
+
   public searchIssueByText: any =()=>{
     this.AppService.searchIssue(this.text).subscribe((apiResponse) =>{
       console.log("you entered some text for search",this.text);
