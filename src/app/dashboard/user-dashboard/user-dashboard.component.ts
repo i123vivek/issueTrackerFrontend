@@ -66,6 +66,7 @@ export class UserDashboardComponent implements OnInit,OnDestroy {
           this.allIssueList.push(temp);
         }
         console.log("All issues are:--",this.allIssueList);
+        
       }
 
     })
@@ -146,16 +147,20 @@ export class UserDashboardComponent implements OnInit,OnDestroy {
   }
 
   public logOutWithFacebook: any = () =>{
-    this.AppService.logOutWithFacebook().subscribe((apiResponse) =>{
-      if(apiResponse.status === 200){
-        console.log("facebook logout function called");
-        Cookie.deleteAll();
-        this.router.navigate(['/']);
-      } else {
-        this.toastr.errorToastr(apiResponse.message);
-      }
-    }, (err) =>{
-      this.toastr.errorToastr("some error occured");
+    this.AppService.logOutWithFacebook().subscribe(() =>{
+    //   if(apiResponse.status === 200){
+    //     console.log("facebook logout function called");
+    //     Cookie.deleteAll();
+    //     this.router.navigate(['/']);
+    //   } else {
+    //     this.toastr.errorToastr(apiResponse.message);
+    //   }
+    // }, (err) =>{
+    //   this.toastr.errorToastr("some error occured");
+    // })
+      console.log("facebook logout function called");
+      Cookie.deleteAll();
+      this.router.navigate(['/']);
     })
   }
 

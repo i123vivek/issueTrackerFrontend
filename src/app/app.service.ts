@@ -55,30 +55,66 @@ export class AppService {
   }
 
   public logOutWithFacebook(): Observable<any> {
-    
+
     return this.http.get(`${this.url}/api/logout`)
   }
 
-  public getAllIssues() : Observable<any> {
+  public getAllIssues(): Observable<any> {
     return this.http.get(`${this.url}/api/v1/users/view/allIssues?authToken=${Cookie.get('authToken')}`);
   }
 
-  public getLoggedInUserIssues(email): Observable<any>{
-    
+  public getLoggedInUserIssues(email): Observable<any> {
+
     return this.http.get(`${this.url}/api/v1/users/${email}/userIssues?authToken=${Cookie.get('authToken')}`);
 
   }
 
-  public getSingleIssueInformation(issueId): Observable<any>{
+  public getSingleIssueInformation(issueId): Observable<any> {
     return this.http.get(`${this.url}/api/v1/users/${issueId}/issueDetails?authToken=${Cookie.get('authToken')}`);
 
   }
 
-  public searchIssue(text): Observable<any>{
-    
+  public searchIssue(text): Observable<any> {
+
     return this.http.get(`${this.url}/api/v1/users/issue/${text}/search?authToken=${Cookie.get('authToken')}`);
-  
+
   }
+
+  public DeleteIssue(issueId): Observable<any> {
+    console.log("issueId to be deleted", issueId);
+    const params = new HttpParams()
+      .set('issueId', issueId)
+    return this.http.post(`${this.url}/api/v1/users/${issueId}/deleteIssue?authToken=${Cookie.get('authToken')}`, params);
+  }
+
+  public WriteComment(CommentData): Observable<any>{
+    console.log("comment data for comment in app service:", CommentData);
+    const params = new HttpParams()
+      .set('issueId',CommentData.issueId)
+      .set('comment',CommentData.comment)
+      .set('commenter',CommentData.commenter)
+      .set('commenterEmail',CommentData.commenterEmail)
+    return this.http.post(`${this.url}/api/v1/users/write/comment?authToken=${Cookie.get('authToken')}`,params);
+  }
+
+  public ViewComment(issueId): Observable<any>{
+    console.log("viewing comment of issueId:",issueId);
+    return this.http.get(`${this.url}/api/v1/users/${issueId}/view/comment?authToken=${Cookie.get('authToken')}`)
+  }
+
+  // public createIssue(issueData):Observable<any>{
+  //   console.log("issue data for create issue in app service: ",issueData);
+  //   const params = new HttpParams()
+  //     .set('issueTitle',issueData.issueTitle)
+  //     .set('issueStatus',issueData.issueStatus)
+  //     .set('issueReporter',issueData.issueReporter)
+  //     .set('email',issueData.issueReporterEmail)
+  //     .set('issueAssignee',issueData.issueAssignee)
+  //     .set('issueAssigneeEmail',issueData.issueAssigneeEmail)
+  //     .set('issueDescription',issueData.issueDescription)
+  //     .set('filename',issueData.filename)
+  //     return this.http.post(`${this.url}/api/v1/users/issue/create`, params);
+  // }
 
 
 

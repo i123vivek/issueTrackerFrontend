@@ -1,7 +1,7 @@
 <div class=" container-fluid bg-light text-dark">
   <div class="row">
     <div class="col-sm-12">
-      <nav class="navbar navbar-expand-md navbar-fixed navbar-dark">
+      <nav class="navbar navbar-fixed navbar-dark">
 
         <a class="navbar-brand" style="font-size:1.5em; color: white"
           [routerLink]="['/user-dashboard']">IssueTrackerTool</a>
@@ -13,8 +13,8 @@
           <button class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="searchIssueByText()">Search</button>
         </form>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="##navbarNavDropdown3"
-          aria-controls="#navbarNavDropdown3" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
           <span class="navbar-toggler-icon"></span>
 
@@ -24,7 +24,7 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
               <div class="profile" style="float:right">
-                
+
                 <h5 style="color: white; text-transform:uppercase">{{fullName}}</h5>
 
                 <button style="width: 150px; margin-left: 0px" class="btn btn-outline-light"
@@ -38,11 +38,8 @@
 
       </nav>
 
-      <div class="col-12 m-0 p-0  d-flex justify-content-center" style="margin: 20px; padding: 10px">
-        <button class="btn btn-info " [routerLink]="['/issue-create']"
-          style="border-radius: 16px; background-color: burlywood">create-issue</button>
-      </div>
-      
+
+
       <div class='row'>
         <div class='col-sm-3'>
           <ul class="list">
@@ -53,6 +50,10 @@
               All Issues
             </li>
           </ul>
+          <div class="col-12 m-0 p-0  d-flex justify-content-center" style="margin: 20px; padding: 10px">
+            <button class="btn btn-info " [routerLink]="['/issue-create']"
+              style="border-radius: 16px; background-color: burlywood">create-issue</button>
+          </div>
         </div>
         <div class="col-sm-9">
           <table class='table table-bordered table-condensed table-striped table-hover' *ngIf="userIssueFlag == true">

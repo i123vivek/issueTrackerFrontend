@@ -22,7 +22,7 @@ import { IssueRouteGaurdService } from './issue-route-gaurd.service';
       {path:'user-dashboard', component: UserDashboardComponent, canActivate:[UserRouteGaurdService]},
       {path:'issue-description-view', component: IssueDescriptionViewComponent, canActivate:[IssueRouteGaurdService]},
       {path:'issue-create', component: IssueCreateComponent, canActivate:[IssueRouteGaurdService]},
-      {path:'issue-edit', component: IssueEditComponent, canActivate:[IssueRouteGaurdService]},
+      {path:'issue-edit/:issueId', component: IssueEditComponent, canActivate:[IssueRouteGaurdService]},
     ])
   ],
   declarations: [UserDashboardComponent, IssueDescriptionViewComponent, IssueEditComponent, IssueCreateComponent],

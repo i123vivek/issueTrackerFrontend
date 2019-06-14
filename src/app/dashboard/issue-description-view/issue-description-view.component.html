@@ -1,3 +1,103 @@
-<p>
-  issue-description-view works!
-</p>
+<div class=" container-fluid bg-light text-dark">
+  <div class="row">
+    <div class="col-sm-12">
+      <nav class="navbar navbar-expand-md  navbar-dark">
+
+        <a class="navbar-brand" style="font-size:1em; color: white"
+          [routerLink]="['/issue-description-view']">issue-description-view
+        </a>
+        <a class="navbar-brand" style="font-size:1em; color: white" [routerLink]="['/user-dashboard']">Home
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+          <span class="navbar-toggler-icon"></span>
+
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <div class="dropdown">
+            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">Dropdown
+            </button>
+            <div class="dropdown-content">
+              <a class="btn " [routerLink]="['/issue-edit/:issueId']">Edit</a>
+              <a class="btn " (click)="DeleteIssue()">Delete</a>
+              <a class="btn " (click)="logout(); logOutWithFacebook();">LogOut</a>
+            </div>
+          </div>
+
+        </div>
+
+      </nav>
+      <div class='row'>
+        <div class='col-12'>
+          <ul class="list-group" *ngIf="displayToken ==true">
+            &nbsp;
+            <li class="list-group-item list-group-item-secondary">
+              Issue-Title :- &nbsp; {{issueTitle}}
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              Issue-Status :- &nbsp; {{issueStatus}}
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              Issue-Date :- &nbsp; {{issueCreatedOn}}
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              Reporter :- &nbsp; {{issueReporterName}}
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              Reporter-Email :- &nbsp; {{issueReporterEmail}}
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              Assignee :- &nbsp; {{issueAssigneeName}}
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              Assignee-Email :- &nbsp; {{issueAssigneeEmail}}
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              Issue-Description :- &nbsp; {{issueDescription}}
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              Issue-Attachment :- &nbsp;
+
+              <button>
+                <a href="http://192.168.1.53:3000/{{issueScreenShotPath}}" target="_blank"> image </a>
+              </button>
+
+            </li>
+
+
+          </ul>
+
+        </div>
+        <div class="col-12">
+          <ul class="list-group" style="width:100%; padding-bottom: 5vh;">
+            <div class="input-group">
+
+              <textarea class="form-control" aria-label="With textarea" [(ngModel)]="comment"
+                placeholder="Enter Comment here...."></textarea>
+              <button class="btn btn-secoundry" style="float:Right" (click)="WriteComment()">comment</button>
+            </div>
+            <button class="btn btn-secoundry" style="float:Right" (click)="ViewComment()"> view
+              <span *ngIf="commentFlag == true">
+
+                <span *ngFor="let comments of commentArray.slice().reverse()">
+                  <li class="list-group-item list-group-item-light"><b>{{comments.commenter}}</b><br>
+                    {{comments.comment}}
+                    <br>
+                    <span style="font-size:smaller">{{comments.createdOn | date:"short"}}</span>
+                  </li>
+                </span>
+              </span>
+            </button>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+
+
+    
+  </div>
+</div>
