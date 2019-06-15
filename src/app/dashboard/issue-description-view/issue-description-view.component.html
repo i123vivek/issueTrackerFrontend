@@ -31,7 +31,20 @@
 
       </nav>
       <div class='row'>
-        <div class='col-12'>
+        
+        <div class='col-md-3' style="border:1px solid black">
+          &nbsp;
+          
+          <button type="button" class="btn btn-secondary" (click)="getWatcherList()">Watcher-list</button>
+          <ul class="list-group" >
+              <li class="list-group-item " *ngFor="let watcher of watcherList">
+                {{watcher.watcherEmail}}
+              </li>
+            </ul>
+
+
+        </div>
+        <div class='col-md-9' style="border:1px solid black">
           <ul class="list-group" *ngIf="displayToken ==true">
             &nbsp;
             <li class="list-group-item list-group-item-secondary">
@@ -69,6 +82,8 @@
 
 
           </ul>
+          <button (click)="AddWatcher()" class="btn btn-info "
+            style="border-radius: 16px; background-color: burlywood">Watch</button>
 
         </div>
         <div class="col-12">
@@ -79,7 +94,7 @@
                 placeholder="Enter Comment here...."></textarea>
               <button class="btn btn-secoundry" style="float:Right" (click)="WriteComment()">comment</button>
             </div>
-            <button class="btn btn-secoundry" style="float:Right" (click)="ViewComment()"> view
+            <button class="btn btn-primary" style="float:Right" (click)="ViewComment()"> view-comment
               <span *ngIf="commentFlag == true">
 
                 <span *ngFor="let comments of commentArray.slice().reverse()">
@@ -95,9 +110,9 @@
         </div>
       </div>
     </div>
-    
 
 
-    
+
+
   </div>
 </div>

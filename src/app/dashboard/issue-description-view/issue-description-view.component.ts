@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, OnDestroy,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppService } from './../../app.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
@@ -13,7 +13,7 @@ import "rxjs/add/operator/do";
   templateUrl: './issue-description-view.component.html',
   styleUrls: ['./issue-description-view.component.css'],
   providers: [Location],
- 
+
 })
 export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
 
@@ -39,28 +39,33 @@ export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
   public commentArray: any = [];
   public commentFlag = false;
   public noCommentFlag = false;
+  public watcherList:any=[];
+  public watcherFlag = false;
   // public commentData:any;
   //public writeComment: any;
 
   displayToken = false
   newCommentFlag: boolean;
+  watcherEmail: any;
 
   //public imageUrl: string;
   //http: any;
 
 
-  
+
   constructor(public AppService: AppService, private location: Location, public toastr: ToastrManager, private _route: ActivatedRoute, private router: Router, private el: ElementRef) { }
 
   ngOnInit() {
     this.authToken = Cookie.get('authToken');
     this.userInfo = this.AppService.getUserInfoFromLocalstorage();
     this.fullName = Cookie.get('fullName');
+    this.watcherEmail = Cookie.get('email');
     this.commenterEmail = Cookie.get('email');
     this.firstChar = this.fullName[0];
     this.issueId = Cookie.get('IssueSelected-Id')
 
     this.getAllInfoOfAnIssue(this.issueId);
+    this.getWatcherList();
   }
 
   public getAllInfoOfAnIssue = (issueId) => {
@@ -177,6 +182,46 @@ export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  public AddWatcher(): any {
+    let data = {
+      issueId: this.issueId,
+      watcherEmail: this.watcherEmail
+    }
+    this.AppService.AddWatcher(data).subscribe((apiResponse) => {
+      if (apiResponse.status === 200) {
+        console.log(apiResponse);
+
+        Cookie.set('watcheId', apiResponse.data.watcherId);
+      } else {
+        this.toastr.errorToastr(apiResponse.message)
+      }
+    }, (err) => {
+      this.toastr.errorToastr('some error occured')
+    });
+  }
+
+  public getWatcherList(): any{
+    this.AppService.getWatcherList(this.issueId).subscribe((apiResponse) =>{
+      console.log(apiResponse);
+      this.watcherList=[];
+      if(apiResponse.data != null) {
+        //this.watcherFlag = true
+        for(let x of apiResponse.data){
+          let temp = {
+            issueId: x.issueId,
+            watcherId: x.watcherId,
+            watcherEmail: x.watcherEmail,
+            
+            date: new Date(x.createdOn).toLocaleDateString()
+          }
+          this.watcherList.push(temp);
+        }
+        console.log("All watchers are:--",this.watcherList);
+        
+      }
+    })
+  }
+
   public WriteComment(): any {
 
     if (this.comment == undefined || this.comment == '' || this.comment == null) {
@@ -198,11 +243,11 @@ export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
           //   console.log("no comment written");
           //   this.toastr.errorToastr("no comment written", 'Oops!')
 
-            // this.noCommentFlag = false;
-            console.log("write comment");
-            console.log("response data of write comment:", data);
-            this.toastr.successToastr('comment added.', 'Success!');
-          
+          // this.noCommentFlag = false;
+          console.log("write comment");
+          console.log("response data of write comment:", data);
+          this.toastr.successToastr('comment added.', 'Success!');
+
 
         },
         error => {
@@ -255,7 +300,7 @@ export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
       this.newCommentFlag = true;
     }
   }
-  
+
 
 
 

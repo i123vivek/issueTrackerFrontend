@@ -102,6 +102,17 @@ export class AppService {
     return this.http.get(`${this.url}/api/v1/users/${issueId}/view/comment?authToken=${Cookie.get('authToken')}`)
   }
 
+  public AddWatcher(data): Observable<any>{
+    const params = new HttpParams()
+      .set('issueId', data.issueId)
+      
+      .set('watcherEmail',data.watcherEmail)
+    return this.http.post(`${this.url}/api/v1/users/add/watcher?authToken=${Cookie.get('authToken')}`,params)
+  }
+  public getWatcherList(issueId): Observable<any>{
+    return this.http.get(`${this.url}/api/v1/users/${issueId}/get/watcherList?authToken=${Cookie.get('authToken')}`)
+  }
+
   // public createIssue(issueData):Observable<any>{
   //   console.log("issue data for create issue in app service: ",issueData);
   //   const params = new HttpParams()
