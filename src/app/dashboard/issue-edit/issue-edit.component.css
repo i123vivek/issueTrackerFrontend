@@ -1,0 +1,30 @@
+.ng-valid[required] , .ng-valid.required {
+
+    border-left :5px solid green;
+
+}
+
+.ng-invalid:not(form) {
+
+    border-left :5px solid red;
+
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    /* font-family: Arial, Helvetica, sans-serif; */
+  }
+  
+  .navbar a {
+    float: left;
+    /* font-size: 16px; */
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }

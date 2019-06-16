@@ -1,3 +1,88 @@
-<p>
-  issue-create works!
-</p>
+<div class='container-fluid bg-light text-dark'>
+
+  <div class="row">
+    <div class="col-md-12">
+      <nav class="navbar navbar-expand-md  navbar-dark">
+
+        <a class="navbar-brand" style="font-size:1em; color: white" [routerLink]="['/issue-create']">Create Issue
+        </a>
+
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+          <span class="navbar-toggler-icon"></span>
+
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="float: left">
+          <a class="navbar-brand" style="font-size:1em; color: white; " [routerLink]="['/user-dashboard']">Home
+          </a>
+
+
+        </div>
+
+      </nav>
+    </div>
+    <div class="col-12">
+
+      <form #createEventForm="ngForm">
+        <div class="form-group">
+          <label>ReporterEmail</label>
+          <input type="text" name="email" [(ngModel)]="issueReporterEmail" #email1="ngModel" class="form-control"
+            readonly>
+        </div>
+
+        <div class="form-group">
+          <label>Issue-Title</label>
+          <input type="text" name="IssueTitle" [(ngModel)]="issueTitle" #title="ngModel" class="form-control"
+            placeholder="Enter event title" required>
+        </div>
+
+        <div [hidden]="title.valid || title.pristine" class="alert alert-danger">
+          Event title is required
+        </div>
+
+        <div class="form-group">
+          <label for="Issue-Status">Issue-Status</label>
+          <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="issueStatus" name="issueStatus"
+            required>
+            <option value="" class="bg-danger">Select your option</option>
+            <option>Done</option>
+            <option>In-BackLog</option>
+            <option>In-Progress</option>
+            <option>In-Test</option>
+            <!-- <option>5</option> -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="Issue-Description">Issue-Description</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="issueDescription"
+            name="issueDescription" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="Issue-Assignee">Issue-Assignee</label>
+          <select required class="form-control" id="exampleFormControlSelect1" [(ngModel)]="issueAssigneeEmail"
+            name="issueAssigneeEmail" required>
+
+
+            <option selected value="">Select your option</option>
+            <option *ngFor="let user of allUser">{{user.userName}}</option>
+
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="Issue-ScreenShot">Issue-ScreenShot</label>
+          <br>
+          <input id="photo" type="file" required>
+
+        </div>
+        <button type="submit" style="margin:5px;" class="btn btn-primary" (click)="createIssue()"
+          [disabled]="!createEventForm.form.valid">submit</button>
+        <button (click)="goBack()" class="btn btn-info "
+          style="align-self:center;border-radius: 16px; background-color: burlywood">Back</button>
+      </form>
+    </div>
+  </div>
+</div>

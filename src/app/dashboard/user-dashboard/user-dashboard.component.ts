@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppService } from './../../app.service';
+import {SocketService} from "./../../socket.service"
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -10,7 +12,8 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
   styleUrls: ['./user-dashboard.component.css']
 })
 export class UserDashboardComponent implements OnInit,OnDestroy {
-
+  
+  public userEmail :String;
   public fullName: String;
   public firstChar: String;
   public authToken: any;
@@ -20,20 +23,55 @@ export class UserDashboardComponent implements OnInit,OnDestroy {
   public text: String;
   public searchedIssue: any= [];
   public userIssueFlag: boolean=false;
+  emmissionFunction
+  notificationList: any[];
 
-  constructor(public AppService: AppService, public toastr: ToastrManager, private _route: ActivatedRoute, private router: Router) { }
+  notificationArraySize;
+
+  
+  
+  // SocketService: any;
+
+  constructor(public AppService: AppService, public toastr: ToastrManager, private _route: ActivatedRoute, private router: Router,public SocketService:SocketService) { }
 
   ngOnInit() {
+
+
+console.log('on init called')
+    
     this.authToken = Cookie.get('authToken');
     this.userInfo = this.AppService.getUserInfoFromLocalstorage();
     this.fullName = Cookie.get('fullName');
     this.firstChar = this.fullName[0];
+    this.userEmail = this.userInfo.email
 
+    
+   
 
     this.checkStatus();
+
+
+   
     this.getAssignedIssuesOfUser();
+     console.log("88888888888888888888888888888888888888888")
+    this.SocketService.sendNotificationRequest(this.userEmail)
+
+    // this.emmissionFunction =setInterval(() => { this.getMyNotification(); }, 10000);
+
+    this.getMyNotification();
+    
+    
+    
+
+    // Cookie.set("BackToken","false")
+
+    //for scoket Notification
+
+   
   }
   public checkStatus: any = () => {
+
+    console.log("check status called")
 
     if (Cookie.get('authToken') === undefined || Cookie.get('authToken') === '' || Cookie.get('authToken') === null) {
 
@@ -48,6 +86,73 @@ export class UserDashboardComponent implements OnInit,OnDestroy {
     }
 
   } // end checkStatus
+
+
+  // public verifyUserConfirmation: any = () => {
+
+  //   console.log("verifing user ................ once ag")
+
+  //   this.SocketService.verifyUser()
+  //     .subscribe((data) => {
+
+  //       console.log("verifing user ................")
+  //       //console.log("data is : ", data);
+
+  //       // this.disconnectedSocket = false;
+        
+  //       // let data1 = {authToken:this.authToken,userSocketId:this.socketid}
+  //       this.SocketService.sendNotificationRequest(this.userEmail)
+  //       console.log(",,,,,,,,,,,,,,,,")
+       
+  //      // this.getOnlineUserList()
+
+  //     });
+  // }
+
+
+  public getMyNotification =() =>{
+    
+
+    this.SocketService.getNotification().subscribe((notificationdata)=>{
+
+      this.notificationList =[]
+
+
+      for(let x in notificationdata)
+      {
+       
+        if (notificationdata[x].notificationPurpose == "create")
+        {
+          let notificationObj ={
+            message:`hey a new issue is created with issueId:-${notificationdata[x].notificationIssueId}`,
+            details:notificationdata[x]
+          }
+
+          this.notificationList.push(notificationObj)
+
+        } else if (notificationdata[x].notificationPurpose == "edit")
+        {
+          let notificationObj ={
+            message:`hey a  issue is edited with issueId:-${notificationdata[x].notificationIssueId}`,
+            details:notificationdata[x]
+          }
+          this.notificationList.push(notificationObj)
+        }else{
+          let notificationObj ={
+            message:`hey ${notificationdata[x].notificationMessage.commenter} commented on issue with issueId:-${notificationdata[x].notificationIssueId}`,
+            details:notificationdata[x]
+          }
+          this.notificationList.push(notificationObj)
+        }
+      }
+
+      console.log('your notification is',notificationdata)
+      this.notificationArraySize = this.notificationList.length
+
+      console.log('your notification list is',this.notificationList)
+
+    })
+  }
 
   public getAllIssues: any = () =>{
     this.userIssueFlag = false;
@@ -113,6 +218,17 @@ export class UserDashboardComponent implements OnInit,OnDestroy {
     
   }
 
+
+  public selectIssueFromNotification =(notificationId)=>{
+    this.notificationList.map((notification)=>{
+    if (notification.details.notificationId == notificationId){
+      
+      Cookie.set('IssueSelected-Id',notification.details.notificationIssueId);
+      this.markNotificationAsSeen(notification.details.notificationId)
+    }
+    })
+  }
+
   public searchIssueByText: any =()=>{
     this.AppService.searchIssue(this.text).subscribe((apiResponse) =>{
       console.log("you entered some text for search",this.text);
@@ -164,9 +280,35 @@ export class UserDashboardComponent implements OnInit,OnDestroy {
     })
   }
 
+  public selectIssueForSearch=(issueId) =>{
+
+    this.searchedIssue.map((issue)=>{
+      if(issue.issueId == issueId)
+      {
+        Cookie.set('IssueSelected-Id',issue.issueId);
+      }
+    })
+
+  }
+
+
+  public markNotificationAsSeen =(notificationId) =>{
+
+    this.AppService.markNotificationAsSeen(notificationId).subscribe((result)=>{
+      console.log('result in mark function ',result)
+    })
+  }
+
+
+  
+
 
 
   ngOnDestroy(){
+
+    // clearInterval(this.emmissionFunction);
+
+    // this.SocketService.exitSocket()
 
   }
 

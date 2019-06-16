@@ -10,9 +10,39 @@
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="text"
             name="text">
-          <button class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="searchIssueByText()">Search</button>
-        </form>
 
+          <button class="btn btn-outline-light my-2 my-sm-0" type="submit" (click)="searchIssueByText()"data-toggle="modal" data-target="#exampleModalScrollable">Search</button>
+          &nbsp; 
+          <button class="btn  btn-outline-light " [routerLink]="['/issue-create']">create-issue</button>
+        </form>
+        <div class="btn-group">
+        <button class="btn btn-outline-light  my-2 my-sm-0" type="button"data-toggle="modal" data-target="#exampleModalLong"
+          >Notifications<span
+            class="badge bg-danger">{{notificationArraySize}}</span>
+        </button>
+
+        <!-- <div class="dropdown-menu dropdown-menu-left" >
+          <ul *ngFor="let notification of notificationList">
+              <li  class="dropdown-item" (click)=" selectIssueFromNotification(notification.details.notificationId)"[routerLink]="['/issue-description-view']">{{notification.message}}</li>
+          </ul>
+            
+        </div> -->
+        </div>
+        <!-- <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Right-aligned menu
+          </button> -->
+        <!-- <div class="dropdown">
+            <button type="button" class="btn btn-outline-light my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" (click)="getMyNotification()">Notifications
+                <span
+                class="badge bg-danger">{{notificationArraySize}}</span>
+            </button>
+            <div class="dropdown-content" *ngFor="let notification of notificationList">
+              <li>{{notification.message}}</li>
+
+            </div>
+        </div> -->
+
+        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
@@ -41,21 +71,22 @@
 
 
       <div class='row'>
-        <div class='col-sm-3'>
-          <ul class="list">
-            <li class="clearfix cursorPointer" (click)="getAssignedIssuesOfUser()">
+        <div class='col-sm-3 ' style="border-right: black 1px solid">
+          <ul class="list mt-3">
+            <li class="clearfix cursorPointer border " (click)="getAssignedIssuesOfUser()">
               All issues of logged in user
             </li>
-            <li class="clearfix cursorPointer" (click)="getAllIssues()">
+
+            <li class="clearfix cursorPointer border mt-1" (click)="getAllIssues()">
               All Issues
             </li>
           </ul>
-          <div class="col-12 m-0 p-0  d-flex justify-content-center" style="margin: 20px; padding: 10px">
+          <!-- <div class="col-12 m-0 p-0  d-flex justify-content-center" style="margin: 20px; padding: 10px">
             <button class="btn btn-info " [routerLink]="['/issue-create']"
-              style="border-radius: 16px; background-color: burlywood">create-issue</button>
-          </div>
+              style="border-radius: 16px; background-color:purple">create-issue</button>
+          </div> -->
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-9 mt-1 ml-0">
           <table class='table table-bordered table-condensed table-striped table-hover' *ngIf="userIssueFlag == true">
             <thead>
               <tr>
@@ -107,3 +138,67 @@
 
 
 </div>
+
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalScrollableTitle">Result For Your Search  </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table class='table table-bordered table-condensed table-striped table-hover' >
+                <thead>
+                  <tr>
+                    <th>issueId</th>
+                    <th>title</th>
+                    <th>reporter</th>
+                    <th>status</th>
+                    <th>date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="clearfix cursorPointer" *ngFor="let issue of searchedIssue"
+                    (click)="selectIssueForSearch(issue.issueId)" [routerLink]="['/issue-description-view']" data-dismiss="modal">
+                    <td>{{issue.issueId}}</td>
+                    <td>{{issue.issueTitle}}</td>
+                    <td>{{issue.issueReporter}}</td>
+                    <td>{{issue.issueStatus}}</td>
+                    <td>{{issue.issueCreatedOn}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Notifications</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <ul *ngFor="let notification of notificationList">
+                  <li  class="dropdown-item" (click)=" selectIssueFromNotification(notification.details.notificationId)"[routerLink]="['/issue-description-view']" data-dismiss="modal">{{notification.message}}</li>
+              </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div>
+      </div>
+    </div>

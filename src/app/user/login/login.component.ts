@@ -66,6 +66,8 @@ export class LoginComponent implements OnInit {
 
     this.appService.loginWithFacebook()
       .subscribe((apiResponse) => {
+
+        console.log('apiResponse Is',apiResponse)
         if (apiResponse.status === 200) {
           console.log("login with facebook called", apiResponse);
           this.appService.setUserInfoInLocalStorage(apiResponse.data.user)

@@ -8,6 +8,7 @@ import 'rxjs/add/operator/toPromise';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Options } from 'selenium-webdriver/opera';
 
 
 @Injectable({
@@ -15,7 +16,8 @@ import { Router } from '@angular/router';
 })
 export class AppService {
 
-  private url = 'http://192.168.1.53:3000';
+  //private url = 'http://192.168.1.53:3000';
+  private url = 'http://localhost:3000';
 
   constructor(public http: HttpClient, public router: Router) { }
 
@@ -80,6 +82,21 @@ export class AppService {
 
   }
 
+  public getAllUser() : Observable<any> {
+    return this.http.get(`${this.url}/api/v1/users/view/allUsers?authToken=${Cookie.get('authToken')}`);
+  }
+
+  public editIssue(issueId,file): Observable<any>{
+    return this.http.put(`${this.url}/api/v1/users/${issueId}/editIssue?authToken=${Cookie.get('authToken')}`,file);
+  }
+
+  public createIssue(file): Observable<any>{
+
+    //const params = new HttpParams()
+
+    return this.http.post(`${this.url}/api/v1/users/issue/create?authToken=${Cookie.get('authToken')}`,file);
+  }
+
   public DeleteIssue(issueId): Observable<any> {
     console.log("issueId to be deleted", issueId);
     const params = new HttpParams()
@@ -112,21 +129,13 @@ export class AppService {
   public getWatcherList(issueId): Observable<any>{
     return this.http.get(`${this.url}/api/v1/users/${issueId}/get/watcherList?authToken=${Cookie.get('authToken')}`)
   }
+  
+   public markNotificationAsSeen = (notificationId) =>{
 
-  // public createIssue(issueData):Observable<any>{
-  //   console.log("issue data for create issue in app service: ",issueData);
-  //   const params = new HttpParams()
-  //     .set('issueTitle',issueData.issueTitle)
-  //     .set('issueStatus',issueData.issueStatus)
-  //     .set('issueReporter',issueData.issueReporter)
-  //     .set('email',issueData.issueReporterEmail)
-  //     .set('issueAssignee',issueData.issueAssignee)
-  //     .set('issueAssigneeEmail',issueData.issueAssigneeEmail)
-  //     .set('issueDescription',issueData.issueDescription)
-  //     .set('filename',issueData.filename)
-  //     return this.http.post(`${this.url}/api/v1/users/issue/create`, params);
-  // }
+    return this.http.get(`${this.url}/api/v1/users/mark/notification/seen?notificationId=${notificationId}&authToken=${Cookie.get('authToken')}`)
 
+   }
+  
 
 
 

@@ -18,7 +18,9 @@ import { AppComponent } from './app.component';
 import { UserModule } from './user/user.module';
 import { LoginComponent } from './user/login/login.component';
 import { AppService } from './app.service';
+
 import { DashboardModule } from './dashboard/dashboard.module';
+import { SocketService } from './socket.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 
   ],
   
-  providers: [AppService],
+  providers: [AppService,SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

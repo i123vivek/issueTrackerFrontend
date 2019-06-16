@@ -305,7 +305,7 @@ export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-
+    // Cookie.delete('IssueSelected-Id')
   }
 
 }
