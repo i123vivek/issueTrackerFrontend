@@ -17,13 +17,18 @@ import { Options } from 'selenium-webdriver/opera';
 export class AppService {
 
   //private url = 'http://192.168.1.53:3000';
-  private url = 'http://localhost:3000';
+  // private url = 'http://localhost:3000';
+
+  private url = 'http://api.bhaiyaji.club:3000';
+
 
   constructor(public http: HttpClient, public router: Router) { }
 
-  public getUserInfoFromLocalstorage = () => {
-    return JSON.parse(localStorage.getItem('userInfo'));
-  }
+  // public getUserInfoFromLocalstorage = () => {
+  //   return JSON.parse(localStorage.getItem('userInfo'));
+  // }
+
+  
 
   public setUserInfoInLocalStorage = (data) => {
     localStorage.setItem('userInfo', JSON.stringify(data))
@@ -38,6 +43,8 @@ export class AppService {
       .set('password', data.password)
     return this.http.post(`${this.url}/api/v1/users/signup`, params);
   }
+
+  
 
   public signinFunction(data): Observable<any> {
     const params = new HttpParams()
@@ -135,6 +142,11 @@ export class AppService {
     return this.http.get(`${this.url}/api/v1/users/mark/notification/seen?notificationId=${notificationId}&authToken=${Cookie.get('authToken')}`)
 
    }
+
+   public getUserInfoForToken(authToken): Observable<any>{
+     console.log("fun called")
+    return this.http.get(`${this.url}/api/v1/users/get/Details/full?authToken=${authToken}`)
+  }
   
 
 

@@ -27,6 +27,9 @@ export class UserDashboardComponent implements OnInit,OnDestroy {
   notificationList: any[];
 
   notificationArraySize;
+  
+
+  public socialFlag: boolean = false;
 
   
   
@@ -38,17 +41,20 @@ export class UserDashboardComponent implements OnInit,OnDestroy {
 
 
 console.log('on init called')
-    
+    //this.socialAuthToken = Cookie.get("socialauthToken")
     this.authToken = Cookie.get('authToken');
-    this.userInfo = this.AppService.getUserInfoFromLocalstorage();
+    // this.userInfo = this.AppService.getUserInfoFromLocalstorage();
     this.fullName = Cookie.get('fullName');
     this.firstChar = this.fullName[0];
-    this.userEmail = this.userInfo.email
+    this.userEmail = Cookie.get('email')
+    //console.log("social authToken" , this.socialAuthToken);
+    console.log("authToken" , this.authToken);
 
     
    
 
     this.checkStatus();
+    //this.setFlag();
 
 
    
@@ -69,12 +75,22 @@ console.log('on init called')
 
    
   }
+  // public setFlag: any =() =>{
+  //   if(Cookie.get('authToken') !== undefined && Cookie.get('authToken') !== null && Cookie.get('authToken') !== ''){
+  //     this.socialFlag = false;
+  //   } else if(Cookie.get('socialauthToken') !== undefined && Cookie.get('socialauthToken') !== null && Cookie.get('socialauthToken') !== ''){
+  //     this.socialFlag = true;
+  //   }
+  //   console.log("social flag is:",this.socialFlag);
+  // }
+  
   public checkStatus: any = () => {
 
     console.log("check status called")
 
-    if (Cookie.get('authToken') === undefined || Cookie.get('authToken') === '' || Cookie.get('authToken') === null) {
+    if (Cookie.get('authToken')=== undefined || Cookie.get('authToken') === '' || Cookie.get('authToken') === null) {
 
+      
       this.router.navigate(['/']);
 
       return false;
@@ -252,7 +268,9 @@ console.log('on init called')
     this.AppService.logout().subscribe((apiResponse) =>{
       if(apiResponse.status === 200){
         console.log("logout function called");
+        Cookie.set("token","false")
         Cookie.deleteAll();
+        
         this.router.navigate(['/']);
       } else {
         this.toastr.errorToastr(apiResponse.message);
@@ -264,18 +282,10 @@ console.log('on init called')
 
   public logOutWithFacebook: any = () =>{
     this.AppService.logOutWithFacebook().subscribe(() =>{
-    //   if(apiResponse.status === 200){
-    //     console.log("facebook logout function called");
-    //     Cookie.deleteAll();
-    //     this.router.navigate(['/']);
-    //   } else {
-    //     this.toastr.errorToastr(apiResponse.message);
-    //   }
-    // }, (err) =>{
-    //   this.toastr.errorToastr("some error occured");
-    // })
+   
       console.log("facebook logout function called");
       Cookie.deleteAll();
+      Cookie.delete("token")
       this.router.navigate(['/']);
     })
   }

@@ -17,11 +17,15 @@ export class LoginComponent implements OnInit {
   constructor(public router: Router, public appService: AppService, public toastr: ToastrManager) { }
 
   ngOnInit() {
+
+    // Cookie.set("just like that","just like taht")
   }
 
   public goToSignUp: any = () => {
     this.router.navigate(['/signup']);
   }
+
+  
 
   public signinFunction: any = () => {
 
@@ -51,6 +55,8 @@ export class LoginComponent implements OnInit {
           Cookie.set('fullName', apiResponse.data.userDetails.firstName + ' ' + apiResponse.data.userDetails.lastName);
 
           this.appService.setUserInfoInLocalStorage(apiResponse.data.userDetails)
+
+          console.log("userInfoSet",apiResponse.data.userDetails)
           this.router.navigate(['/user-dashboard']);
         }
         else {
@@ -62,30 +68,42 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public facebookLogin: any = () => {
+  // public facebookLogin: any = () => {
 
-    this.appService.loginWithFacebook()
-      .subscribe((apiResponse) => {
+  //   this.appService.loginWithFacebook()
+  //     .subscribe((apiResponse) => {
 
-        console.log('apiResponse Is',apiResponse)
-        if (apiResponse.status === 200) {
-          console.log("login with facebook called", apiResponse);
-          this.appService.setUserInfoInLocalStorage(apiResponse.data.user)
-          Cookie.set('authToken', apiResponse.data.authToken);
-          Cookie.set('email', apiResponse.data.userDetails.email);
-          Cookie.set('userId', apiResponse.data.user.userId);
-          Cookie.set('fullName', apiResponse.data.user.firstName + ' ' + apiResponse.data.user.lastName);
-          this.router.navigate(['/user-dashboard'])
-        } else {
-          this.toastr.errorToastr(apiResponse.message)
+  //       console.log('apiResponse Is',apiResponse)
+  //       if (apiResponse.status === 200) {
+  //         console.log("login with facebook called", apiResponse);
+  //         this.appService.setUserInfoInLocalStorage(apiResponse.data.user)
+  //         Cookie.set('authToken', apiResponse.data.authToken);
+  //         Cookie.set('email', apiResponse.data.userDetails.email);
+  //         Cookie.set('userId', apiResponse.data.user.userId);
+  //         Cookie.set('fullName', apiResponse.data.user.firstName + ' ' + apiResponse.data.user.lastName);
+  //         this.router.navigate(['/user-dashboard'])
+  //       } else {
+  //         this.toastr.errorToastr(apiResponse.message)
 
-        }
-      }, (err) => {
-        this.toastr.errorToastr('some error occured')
-
-
-      });
-  }
+  //       }
+  //     }, (err) => {
+  //       this.toastr.errorToastr('some error occured')
 
 
+  //     });
+  // }
+
+
+  // public setToken =() =>{
+    
+  //   Cookie.set("token","true")
+
+  //   window.open("http://localhost:3000/login/facebook");
+
+
+  //   window.close();
+
+    
+
+  // }
 }

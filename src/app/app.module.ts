@@ -19,8 +19,14 @@ import { UserModule } from './user/user.module';
 import { LoginComponent } from './user/login/login.component';
 import { AppService } from './app.service';
 
+import { CookieService } from 'ngx-cookie-service';
+
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SocketService } from './socket.service';
+import { UserDashboardComponent } from './dashboard/user-dashboard/user-dashboard.component';
+import { UserRouteGaurdService } from './dashboard/user-route-gaurd.service';
+import { SocialloggedInComponent } from './user/sociallogged-in/sociallogged-in.component';
+//import { SocialloggedInComponent } from './user/sociallogged-in/sociallogged-in.component';
 
 @NgModule({
   declarations: [
@@ -42,15 +48,22 @@ import { SocketService } from './socket.service';
     //TooltipModule.forRoot(),
     ToastrModule.forRoot(),
     RouterModule.forRoot([
+
+
+      { path: 'loggedin/:token' ,component: SocialloggedInComponent,pathMatch: 'full'},
       { path: 'login', component: LoginComponent, pathMatch: 'full'},
+     
+      
       { path: '', redirectTo: 'login', pathMatch: 'full'},
       { path: '*', component: LoginComponent},
       { path: '**', component: LoginComponent},
+      // { path: 'loggedin/:token', component: SocialloggedInComponent},
+      
 ])
 
   ],
   
-  providers: [AppService,SocketService],
+  providers: [AppService,SocketService,CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

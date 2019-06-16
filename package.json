@@ -33,6 +33,8 @@
     "ng2-file-upload": "^1.3.0",
     "ng6-bootstrap-modal": "^1.0.2",
     "ng6-toastr-notifications": "^1.0.4",
+    "ngx-cookie": "^4.1.2",
+    "ngx-cookie-service": "^2.2.0",
     "popper.js": "^1.15.0",
     "rxjs": "~6.2.0",
     "socket.io-client": "^2.2.0",

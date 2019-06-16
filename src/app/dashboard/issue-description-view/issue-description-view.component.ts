@@ -57,7 +57,7 @@ export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.authToken = Cookie.get('authToken');
-    this.userInfo = this.AppService.getUserInfoFromLocalstorage();
+    // this.userInfo = this.AppService.getUserInfoFromLocalstorage();
     this.fullName = Cookie.get('fullName');
     this.watcherEmail = Cookie.get('email');
     this.commenterEmail = Cookie.get('email');

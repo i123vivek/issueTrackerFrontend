@@ -48,11 +48,11 @@ export class IssueCreateComponent implements OnInit {
 
   ngOnInit() {
     this.authToken = Cookie.get('authToken');
-    this.userInfo = this.AppService.getUserInfoFromLocalstorage();
+    // this.userInfo = this.AppService.getUserInfoFromLocalstorage();
     console.log('the user Info are', this.userInfo)
     this.fullName = Cookie.get('fullName');
     this.firstChar = this.fullName[0];
-    this.issueReporterEmail = this.userInfo.email
+    this.issueReporterEmail =  Cookie.get('email')
     this.issueReporterName = this.fullName
 
     this.getAllUserOnSystem();

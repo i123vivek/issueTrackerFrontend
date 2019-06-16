@@ -45,7 +45,7 @@ export class IssueEditComponent implements OnInit,OnDestroy {
   ngOnInit() {
     this.currentIssueId = Cookie.get('IssueSelected-Id')
     this.authToken = Cookie.get('authToken');
-    this.userInfo = this.AppService.getUserInfoFromLocalstorage();
+    // this.userInfo = this.AppService.getUserInfoFromLocalstorage();
     console.log('the user Info are', this.userInfo)
     this.fullName = Cookie.get('fullName');
     this.firstChar = this.fullName[0];

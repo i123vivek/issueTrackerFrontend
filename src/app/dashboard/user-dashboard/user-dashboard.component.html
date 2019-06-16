@@ -53,13 +53,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <div class="profile" style="float:right">
+              <div  class="profile" style="float:right">
 
                 <h5 style="color: white; text-transform:uppercase">{{fullName}}</h5>
 
-                <button style="width: 150px; margin-left: 0px" class="btn btn-outline-light"
-                  (click)="logout(); logOutWithFacebook();">LogOut</button>
+                <button  style="width: 150px; margin-left: 0px" class="btn btn-outline-light" 
+                  (click)=" logout()">LogOut</button>
+                  
               </div>
+              <!-- <div  class="profile" style="float:right">
+
+                  <h5 style="color: white; text-transform:uppercase">{{fullName}}</h5>
+  
+                  <button  style="width: 150px; margin-left: 0px" class="btn btn-outline-light" *ngIf="socialFlag == true"
+                    (click)=" logout();">LogOut</button>
+                    
+                </div> -->
             </li>
           </ul>
         </div>
