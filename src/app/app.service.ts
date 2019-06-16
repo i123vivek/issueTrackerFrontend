@@ -19,7 +19,7 @@ export class AppService {
   //private url = 'http://192.168.1.53:3000';
   // private url = 'http://localhost:3000';
 
-  private url = 'http://api.bhaiyaji.club:3000';
+  private url = 'http://api.bhaiyaji.club';
 
 
   constructor(public http: HttpClient, public router: Router) { }
