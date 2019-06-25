@@ -44,13 +44,15 @@ export class IssueEditComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
     this.currentIssueId = Cookie.get('IssueSelected-Id')
+
+    
     this.authToken = Cookie.get('authToken');
-    // this.userInfo = this.AppService.getUserInfoFromLocalstorage();
+    //this.userInfo = this.AppService.getUserInfoFromLocalstorage();
     console.log('the user Info are', this.userInfo)
     this.fullName = Cookie.get('fullName');
     this.firstChar = this.fullName[0];
-    this.issueReporterEmail = this.userInfo.email;
-    this.issueReporterName = this.fullName;
+    // this.issueReporterEmail = this.userInfo.email;
+    // this.issueReporterName = this.fullName;
 
     if (this.currentIssueId === undefined || this.currentIssueId === '' || this.currentIssueId === null) {
       this.toastr.errorToastr('select an issue to edit');
