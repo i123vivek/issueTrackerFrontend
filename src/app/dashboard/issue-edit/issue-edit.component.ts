@@ -84,9 +84,8 @@ export class IssueEditComponent implements OnInit,OnDestroy {
 
         this.issueScreenShotPath = apiResponse.data.screenshotPath;
 
-        this.issueScreenShot = `http://192.168.1.53:3000/${this.issueScreenShotPath}`
-        //this.imageUrl = "http://192.168.1.53:3000/{{issueScreenShotPath}}"
-        //this.imageUrl = return this.http.get("http://192.168.1.53:3000/issueScreenShotPath")
+        this.issueScreenShot = `http://api.bhaiyaji.club/${this.issueScreenShotPath}`
+        
 
         this.displayToken = true;
 

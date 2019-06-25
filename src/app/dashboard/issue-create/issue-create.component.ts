@@ -149,18 +149,4 @@ export class IssueCreateComponent implements OnInit {
   }
 
 
-  // public toCheckCreateFunTemp = (file) => {
-
-  //   this.AppService.createIssue(file).subscribe(
-  //     data => {
-  //       console.log('data to test ', data)
-
-  //     },
-  //     error => {
-  //       console.log('error to test ', error)
-  //     }
-  //   )
-
-  // }
-
 }

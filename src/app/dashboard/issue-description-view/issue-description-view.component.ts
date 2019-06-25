@@ -41,15 +41,12 @@ export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
   public noCommentFlag = false;
   public watcherList:any=[];
   public watcherFlag = false;
-  // public commentData:any;
-  //public writeComment: any;
+  
 
   displayToken = false
   newCommentFlag: boolean;
   watcherEmail: any;
 
-  //public imageUrl: string;
-  //http: any;
 
 
 
@@ -90,8 +87,7 @@ export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
 
 
         this.issueScreenShotPath = apiResponse.data.screenshotPath;
-        //this.imageUrl = "http://192.168.1.53:3000/{{issueScreenShotPath}}"
-        //this.imageUrl = return this.http.get("http://192.168.1.53:3000/issueScreenShotPath")
+        
 
         this.displayToken = true;
 
@@ -147,16 +143,7 @@ export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
 
   public logOutWithFacebook: any = () => {
     this.AppService.logOutWithFacebook().subscribe(() => {
-      //   if(apiResponse.status === 200){
-      //     console.log("facebook logout function called");
-      //     Cookie.deleteAll();
-      //     this.router.navigate(['/']);
-      //   } else {
-      //     this.toastr.errorToastr(apiResponse.message);
-      //   }
-      // }, (err) =>{
-      //   this.toastr.errorToastr("some error occured");
-      // })
+      
       console.log("facebook logout function called");
       Cookie.deleteAll();
       this.router.navigate(['/']);
@@ -238,12 +225,7 @@ export class IssueDescriptionViewComponent implements OnInit, OnDestroy {
 
       this.AppService.WriteComment(CommentData).subscribe(
         data => {
-          // if (data.comment === undefined || data.comment === '' || data.comment === null) {
-          //   this.noCommentFlag = true;
-          //   console.log("no comment written");
-          //   this.toastr.errorToastr("no comment written", 'Oops!')
-
-          // this.noCommentFlag = false;
+          
           console.log("write comment");
           console.log("response data of write comment:", data);
           this.toastr.successToastr('comment added.', 'Success!');
